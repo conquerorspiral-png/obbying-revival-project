@@ -40,4 +40,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.90000004, 0)
 transform = Transform3D(1, 0, 0, 0, 0.96000004, 0, 0, 0, 1, -2.9802322e-08, 0.5288001, 2.9802322e-08)
 shape = SubResource("BoxShape3D_hhoun")
 
+[node name="flickRay" type="RayCast3D" parent="." unique_id=1153203733]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.1)
+target_position = Vector3(0, -0.4, 0.7)
+
+[node name="flickRay2" type="RayCast3D" parent="." unique_id=1694837158]
+transform = Transform3D(-2, 0, -8.742278e-08, 0, 1, 0, 1.7484555e-07, 0, -1, -1.7484556e-08, 0.03, -0.1)
+target_position = Vector3(0, -0.4, 0.7)
+
+[node name="flickRay3" type="RayCast3D" parent="." unique_id=364928567]
+transform = Transform3D(1.1920929e-07, 0, -0.99999994, 0, 1, 0, 1.9999999, 0, 5.9604645e-08, -8.742278e-09, 0.03, 0)
+target_position = Vector3(0, -0.4, 0.7)
+
+[node name="flickRay4" type="RayCast3D" parent="." unique_id=1295963090]
+transform = Transform3D(-2.9802322e-07, 0, 1, 0, 1, 0, -2, 0, -1.4901161e-07, -8.742278e-09, 0.03, 0)
+target_position = Vector3(0, -0.4, 0.7)
+
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
