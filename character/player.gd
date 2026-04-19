@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 #walkspeed and jump height
 const SPEED = 4
 const JUMP_VELOCITY = 7.5
@@ -12,13 +13,26 @@ var truss_used := false
 
 enum states {Climbing, Idle, Walking, Falling, Jumping}
 
-@export var State: states
+@export var State: states :
+	set(new):
+		if is_node_ready():
+			State = new
+			update_anim()
 
 var jump_lock := 0.0
 
 # health shit idk
 @export var MaxHealth := 100.0
-var Health := 100.0
+var Health := 100.0 : 
+	set(new):
+		if new < Health: # Checking if u took damage
+			if new > 0: # checking if ur alive
+				regen_timer = 0.0
+				took_damage = true
+		
+		update_health_bar()
+		Health = clamp(new,0,MaxHealth)
+
 var kills := 5
 var ouch := 20
 var instakills := MaxHealth
@@ -48,7 +62,7 @@ var just_jumped_off := false
 @export var spawn: Node3D
 
 @export var voidDepth := 50.0
-@export var shiftlock := false
+@export var follow_camera := false 
 var last_state = -1
 var is_climbing := false
 var climb_normal := Vector3.ZERO
@@ -113,27 +127,9 @@ func update_health_bar():
 	if HealthBar:
 		HealthBar.value = (Health / MaxHealth) * 100
 
-
-func remove_Health(amount: float):
-	if Health > 0:
-		Health = max(0, Health - amount)
-		update_health_bar()
-		regen_timer = 0.0
-		took_damage = true
-
-
-func add_Health(amount: float):
-	if Health < MaxHealth:
-		Health = min(MaxHealth, Health + amount)
-		update_health_bar()
-
-
 func reset():
 	position = spawn.position
 	Health = MaxHealth
-	update_health_bar()
-
-
 
 func _physics_process(delta: float) -> void:
 	# timers
@@ -149,7 +145,6 @@ func _physics_process(delta: float) -> void:
 		else:
 			Health += regen_rate * delta
 			Health = min(Health, MaxHealth)
-			update_health_bar()
 
 	# climbing
 	if ray.is_colliding() and not is_on_floor():
@@ -247,7 +242,7 @@ func _physics_process(delta: float) -> void:
 
 # rotation
 	if is_climbing:
-		if shiftlock:
+		if follow_camera:
 			var cam_forward = -cam.global_transform.basis.z
 			cam_forward.y = 0
 			cam_forward = cam_forward.normalized()
@@ -258,7 +253,7 @@ func _physics_process(delta: float) -> void:
 			pass 
 
 	else:
-		if shiftlock:
+		if follow_camera:
 			var cam_forward = -cam.global_transform.basis.z
 			cam_forward.y = 0
 			cam_forward = cam_forward.normalized()
@@ -283,9 +278,5 @@ func _process(delta: float) -> void:
 
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
-	if body.is_in_group("kills"):
-		remove_Health(kills)
-	elif body.is_in_group("ouch"):
-		remove_Health(ouch)
-	elif body.is_in_group("instakills"):
-		remove_Health(instakills)
+	if body.is_in_group("damage_dealers"):
+		self.Health -= body.damage

@@ -24,6 +24,7 @@ shape = SubResource("BoxShape3D_aypkh")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=335641631 node_paths=PackedStringArray("target")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.1, 1, 0.1)
+top_level = true
 script = ExtResource("3_aypkh")
 target = NodePath("..")
 
@@ -57,7 +58,10 @@ target_position = Vector3(0, -0.4, 0.7)
 transform = Transform3D(-2.9802322e-07, 0, 1, 0, 1, 0, -2, 0, -1.4901161e-07, -8.742278e-09, 0.03, 0)
 target_position = Vector3(0, -0.4, 0.7)
 
-[node name="Character" parent="." unique_id=1682260482 instance=ExtResource("3_hhoun")]
+[node name="Character" parent="." unique_id=61312156 instance=ExtResource("3_hhoun")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0.59999996, 0)
+
+[node name="Focus" type="Marker3D" parent="." unique_id=1520751196]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8682388, 0)
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
