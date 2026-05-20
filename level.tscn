@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d1c2eswg8w2pk"]
 
-[ext_resource type="PackedScene" uid="uid://b8q02e5g57tx4" path="res://assets/prefabs/core/player.tscn" id="1_u52ul"]
+[ext_resource type="PackedScene" uid="uid://b8q02e5g57tx4" path="res://assets/character/player.tscn" id="1_u52ul"]
 [ext_resource type="PackedScene" uid="uid://dsern6kcs1k5t" path="res://assets/prefabs/building/Old/Part.tscn" id="2_vonw3"]
 [ext_resource type="Texture2D" uid="uid://n57bufw4xuqm" path="res://assets/skyboxes/citrus_orchard_road_puresky_4k.exr" id="3_oi3di"]
 [ext_resource type="PackedScene" uid="uid://bg63l1nkvrbap" path="res://assets/prefabs/building/Old/Inlet.tscn" id="4_0b4ue"]
@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://21fflrxp85y2" path="res://assets/prefabs/UI/Health.tscn" id="9_i2t4f"]
 [ext_resource type="PackedScene" uid="uid://d3w0odx2msggi" path="res://assets/prefabs/building/Old/Winpad.tscn" id="13_8b0r0"]
 [ext_resource type="PackedScene" uid="uid://r7idkhhne3c0" path="res://assets/prefabs/UI/esc_menu.tscn" id="13_h6smj"]
-[ext_resource type="PackedScene" path="res://assets/prefabs/UI/Timer.tscn" id="13_v5j5c"]
+[ext_resource type="PackedScene" uid="uid://fuehl670w3lw" path="res://assets/prefabs/UI/Timer.tscn" id="13_v5j5c"]
 [ext_resource type="PackedScene" uid="uid://bhgjl8nsom23c" path="res://assets/prefabs/UI/fps.tscn" id="14_h6smj"]
 [ext_resource type="FontFile" uid="uid://bb74yqfgngijg" path="res://assets/fonts/AlteHaasGroteskBold.ttf" id="15_v5j5c"]
 
@@ -25,10 +25,6 @@ background_mode = 2
 sky = SubResource("Sky_f2txt")
 
 [node name="Node3D" type="Node3D" unique_id=489380727]
-
-[node name="Player" parent="." unique_id=1574667455 node_paths=PackedStringArray("HealthBar") instance=ExtResource("1_u52ul")]
-transform = Transform3D(1, 0, 0, 0, 0.99987656, 0.015707314, 0, -0.015707314, 0.99987656, 63.450752, 8.278616, -0.92766094)
-HealthBar = NodePath("../Health")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1117970329]
 environment = SubResource("Environment_1ainy")
@@ -651,3 +647,9 @@ transform = Transform3D(1, 0, 0, 0, 4, 0, 0, 0, 2, 3.854906, 0.5, -21.75)
 
 [node name="Timer" parent="." unique_id=1938707771 instance=ExtResource("13_v5j5c")]
 mouse_filter = 2
+
+[node name="Player" parent="." unique_id=1574667455 node_paths=PackedStringArray("shiftlockLogo", "HealthBar", "spawn") instance=ExtResource("1_u52ul")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.80663, 10.112933, 0)
+shiftlockLogo = NodePath("../ShiftlockIcon")
+HealthBar = NodePath("../Health")
+spawn = NodePath("../Old/SpawnLocation")

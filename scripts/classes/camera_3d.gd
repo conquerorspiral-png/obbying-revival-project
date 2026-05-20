@@ -1,7 +1,7 @@
 extends Camera3D
 class_name CamStuff
 
-@export var target: PlayerClass
+@export var target: CharacterBody3D
 @export var distance := 10.0
 @export var max_distance := 20.0
 @export var zoom_speed := 1
@@ -88,6 +88,6 @@ func _process(delta):
 		final_distance = origin.distance_to(hit)-.1
 	
 	distance = min(lerp(distance, target_distance, smooth_speed * delta),final_distance)
-	rotation = Vector3(pitch,yaw,0)
+	global_rotation = Vector3(pitch, yaw, 0)
 	
 	global_position = target.get_node("Focus").global_position + global_basis.z * distance + global_transform.basis*offset

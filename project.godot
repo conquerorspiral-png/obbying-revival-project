@@ -45,7 +45,6 @@ folder_colors={
 "res://scenes/": "orange",
 "res://scripts/autoload/": "purple",
 "res://scripts/classes/": "yellow",
-"res://scripts/classes/StateHandler/": "pink",
 "res://scripts/gui/": "green"
 }
 
