@@ -179,11 +179,8 @@ func spawn_node(node_data):
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("addCheckpoint") and player != null:
-		var current_cam_mode = player.cam.mode
-		var current_cam_transform = player.cam.global_transform
-		var current_shiftlock = GameManager.shiftlocked
 		
-		addCheckpoint(player.position, player.rotation, player.velocity, current_cam_mode, current_cam_transform, current_shiftlock)
+		addCheckpoint(player.position, player.rotation, player.velocity, player.cam.mode, player.cam.global_transform, GameManager.shiftlocked)
 	if Input.is_action_just_pressed("removeCheckpoint"):
 		removeLastCheckpoint()
 
