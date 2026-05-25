@@ -1,15 +1,15 @@
-[gd_scene format=3 uid="uid://282part38eu8"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_3nosk"]
+[gd_scene format=3 uid="uid://ds5ohh0dceogp"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_yqgb3"]
 
-[node name="Cylinder" type="StaticBody3D" unique_id=1001590327]
+[sub_resource type="CylinderMesh" id="CylinderMesh_3nosk"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=663752872]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("CylinderMesh_3nosk")
+[node name="Cylinder" type="RigidBody3D" unique_id=360271298]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=95344513]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CylinderShape3D_yqgb3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=663752872]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_3nosk")
