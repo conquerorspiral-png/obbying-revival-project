@@ -3,6 +3,7 @@ extends Node3D
 @onready var part = preload("res://assets/prefabs/building/Old/Part.tscn")
 @onready var cylinder = preload("res://assets/prefabs/building/Old/cylinder.tscn")
 @onready var wedge = preload("res://assets/prefabs/building/Old/wedge.tscn")
+@onready var ball = preload("res://assets/prefabs/building/Old/ball.tscn")
 @onready var truss = preload("res://assets/prefabs/building/Old/Truss.tscn")
 @onready var player = $Player
 
@@ -225,6 +226,35 @@ func addWedge(pos, rot_deg, size, color):
 		arr_mesh.surface_set_material(0, wedge_mesh)
 		mesh.mesh = arr_mesh
 
+func addBall(pos, rot_deg, size, color):
+	var newball = ball.instantiate()
+	add_child(newball)
+	var mesh = newball.get_node("MeshInstance3D") as MeshInstance3D
+	var coll = newball.get_node("CollisionShape3D")
+	newball.position = pos
+	var rot_rad = Vector3(
+		deg_to_rad(rot_deg.x),
+		deg_to_rad(rot_deg.y),
+		deg_to_rad(rot_deg.z)
+	)
+	newball.transform.basis = Basis.from_euler(rot_rad, EULER_ORDER_ZXY)
+	if coll.shape:
+		coll.shape = coll.shape.duplicate()
+		var shape = coll.shape as SphereShape3D
+		if shape:
+			# largest axis of the size divided by 2
+			shape.radius = max(size.x, max(size.y, size.z)) / 2
+	if mesh.mesh:
+		mesh.mesh = mesh.mesh.duplicate()
+		var ball_mesh = mesh.mesh as SphereMesh
+		if ball_mesh:
+			ball_mesh.radius = max(size.x, max(size.y, size.z)) / 2
+			ball_mesh.height = ball_mesh.radius * 2
+				
+		if mesh.mesh.material:
+			mesh.mesh.material = mesh.mesh.material.duplicate()
+			mesh.mesh.material.set_shader_parameter("base_color", color)
+
 func addTruss(pos, rot_deg, size, _classname):
 	var newtruss = truss.instantiate()
 	add_child(newtruss)
@@ -261,6 +291,13 @@ func spawn_node(node_data):
 			)
 		elif shape == "Wedge":
 			addWedge(
+				to_vec3(p.get("Position")),
+				to_vec3(p.get("Rotation")),
+				to_vec3(p.get("Size")),
+				to_color(p.get("Color"))
+			)
+		elif shape == "Ball":
+			addBall(
 				to_vec3(p.get("Position")),
 				to_vec3(p.get("Rotation")),
 				to_vec3(p.get("Size")),
