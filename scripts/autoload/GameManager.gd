@@ -18,7 +18,21 @@ signal VersionLoaded
 var version_latest:String   #  This is the latest version from github - danki
 var version:String          #  The current version - danki
 
-func _init() -> void:
+# Setup
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		if !OS.is_restart_on_exit_set():
+			ResourceSaver.save(data,"user://data.tres")
+		get_tree().quit()
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_F11:
+			toggle_fullscreen()
+
+func _ready():
+	print(RenderingServer.get_current_rendering_method())
 	# Loading playerdata
 	if FileAccess.file_exists("user://data.tres"):
 		data = ResourceLoader.load("user://data.tres")
@@ -29,20 +43,50 @@ func _init() -> void:
 	
 	if RenderingServer.get_current_rendering_method() != data.renderer:
 		OS.create_instance(["--rendering-method",data.renderer])
-		OS.kill(OS.get_process_id())
+		get_tree().quit(0)
 	
-func _input(event):
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_F11:
-			toggle_fullscreen()
+	var open = FileAccess.open("res://version.txt",FileAccess.READ)
+	version = open.get_as_text()
+	open.close()
+	var request = HTTPRequest.new()
+	add_child(request)
+	request.request_completed.connect(func(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray):
+		if result == OK:
+			version_latest = body.get_string_from_utf8()
+			VersionLoaded.emit()
+		else:
+			version_latest = ""
+			VersionLoaded.emit()
+		pass)
+		
+	request.request(VERSIONLINK,[],HTTPClient.METHOD_GET)
+	
+	# Window + Mouse Setup
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	get_window().mode = Window.MODE_WINDOWED
+	ensure_levels_folder()
+	copy_default_levels()
+	
+	# Fps handling thing
+	data.MaxFPSChanged.connect(func(new):
+		Engine.max_fps = int(new)
+		pass)
+	Engine.max_fps = int(data.maxFPS)
+	
+	# Yep
+	CharacterAdded.connect(func(new):
+		var rand = get_tree().get_nodes_in_group("SpawnLocation").pick_random()
+		new.global_position = rand.global_position + Vector3(0,1,0)
+		pass)
+
+# yeo
 
 func toggle_fullscreen():
+	# fullscreen (not) copyrighted by Tob Odin Odin and (not) only allowed in ORP usage.
 	if window.mode == Window.MODE_WINDOWED:
 		window.mode = Window.MODE_FULLSCREEN # take a wild guess on what this does
 	else:
 		window.mode = Window.MODE_WINDOWED
-
-# fullscreen (not) copyrighted by Tob Odin Odin and (not) only allowed in ORP usage.
 
 func copy_default_levels():
 	var source_dir = DirAccess.open("res://mainlevels")
@@ -87,42 +131,3 @@ func ensure_levels_folder(): # makes sure that levels exists lol
 	var dir = DirAccess.open("user://")
 	if not dir.dir_exists("levels"):
 		dir.make_dir("levels")
-
-func _ready():
-	print(RenderingServer.get_current_rendering_method())
-	var open = FileAccess.open("res://version.txt",FileAccess.READ)
-	version = open.get_as_text()
-	open.close()
-	var request = HTTPRequest.new()
-	add_child(request)
-	request.request_completed.connect(func(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray):
-		if result == OK:
-			version_latest = body.get_string_from_utf8()
-			VersionLoaded.emit()
-		pass)
-		
-	request.request(VERSIONLINK,[],HTTPClient.METHOD_GET)
-	
-	# Window + Mouse Setup
-	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
-	get_window().mode = Window.MODE_WINDOWED
-	ensure_levels_folder()
-	copy_default_levels()
-	
-	# Fps handling thing
-	data.MaxFPSChanged.connect(func(new):
-		Engine.max_fps = int(new)
-		pass)
-	Engine.max_fps = int(data.maxFPS)
-	
-	# Yep
-	CharacterAdded.connect(func(new):
-		var rand = get_tree().get_nodes_in_group("SpawnLocation").pick_random()
-		new.global_position = rand.global_position + Vector3(0,1,0)
-		pass)
-	
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		if !OS.is_restart_on_exit_set():
-			ResourceSaver.save(data,"user://data.tres")
-		get_tree().quit()

@@ -64,8 +64,9 @@ func _input(event):
 
 	if event is InputEventMouseMotion:
 		if rotating or GameManager.shiftlocked:
-			yaw -= event.relative.x * GameManager.data.sensitivity / 200.0
-			pitch -= event.relative.y * GameManager.data.sensitivity / 200.0
+			var win_size = get_window().size
+			yaw -= event.relative.x/win_size.x * 1000 * GameManager.data.sensitivity / 200.0
+			pitch -= event.relative.y/win_size.y * 1000 * GameManager.data.sensitivity / 200.0
 			pitch = clamp(pitch, -1.5, 1.5)
 
 func _process(delta):

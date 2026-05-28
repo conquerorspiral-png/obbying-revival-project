@@ -53,21 +53,20 @@ offset_bottom = 544.0
 
 [node name="Back" type="Button" parent="." unique_id=819489497]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = -1
+anchor_left = 0.175
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 0.175
 anchor_bottom = 1.0
-offset_left = -68.0
+offset_left = -150.5
 offset_top = -60.0
-offset_right = 68.0
+offset_right = 150.5
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_dpyxx")
 theme_override_fonts/font = ExtResource("5_vgykv")
-theme_override_font_sizes/font_size = 50
-text = "close"
-alignment = 0
+theme_override_font_sizes/font_size = 45
+text = "[Esc] Cancel"
 
 [node name="Menu" type="Button" parent="." unique_id=1889324263]
 layout_mode = 1
@@ -76,34 +75,32 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -558.0
+offset_left = -159.0
 offset_top = -60.0
-offset_right = -232.0
+offset_right = 167.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_dpyxx")
 theme_override_fonts/font = ExtResource("5_vgykv")
-theme_override_font_sizes/font_size = 50
-text = "back to menu"
-alignment = 0
+theme_override_font_sizes/font_size = 45
+text = "[L] Main Menu"
 
 [node name="Quit" type="Button" parent="." unique_id=1246730492]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = -1
+anchor_left = 0.825
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 0.825
 anchor_bottom = 1.0
-offset_left = 265.0
+offset_left = -119.0
 offset_top = -60.0
-offset_right = 591.0
+offset_right = 119.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_dpyxx")
 theme_override_fonts/font = ExtResource("5_vgykv")
-theme_override_font_sizes/font_size = 50
-text = "quit game"
-alignment = 0
+theme_override_font_sizes/font_size = 45
+text = "[Q] Quit Game"
 
 [node name="Label" type="Label" parent="." unique_id=757265512]
 layout_mode = 1

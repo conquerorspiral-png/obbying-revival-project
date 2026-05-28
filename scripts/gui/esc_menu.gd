@@ -13,8 +13,14 @@ func toggle_paused():
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
-		if event.keycode == KEY_ESCAPE and !event.is_echo() and event.is_pressed():
-			toggle_paused()
+		if !event.is_echo() and event.is_pressed():
+			if event.keycode == KEY_ESCAPE :
+				toggle_paused()
+			if get_tree().paused:
+				if event.keycode == KEY_L:
+					$Menu.grab_focus()
+				if event.keycode == KEY_Q:
+					$Quit.grab_focus()
 			
 func _ready():
 	$Back.pressed.connect(toggle_paused)

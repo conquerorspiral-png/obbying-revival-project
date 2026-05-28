@@ -77,7 +77,8 @@ func playing(level_path:String):
 		return
 
 	var data = json.data
-
+	
+	@warning_ignore("shadowed_variable_base_class")
 	var name = data.get("ObbyName", "Unknown")
 	var diff = data.get("Difficulty", "Unknown")
 	var creator = data.get("Creator", "Unknown")

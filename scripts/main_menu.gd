@@ -16,13 +16,33 @@ var button = preload("res://assets/prefabs/UI/LevelCard.tscn")
 var whitespace_remover = RegEx.new()
 
 func _ready():
+	# -- Level Handlers -- #
 	get_window().files_dropped.connect(_file_dragged)
 	load_all_levels()
 	
+	# -- Customization -- #
 	for picker in body_parts:
 		var part_name: String = body_parts[picker]
 		picker.color_changed.connect(func(c): _send_color_to_player(part_name, c))
 		picker.color = GameManager.data.body_colors.get(part_name, Color.WHITE)
+	
+	# -- Version Checking -- #
+	if GameManager.version_latest == "": await GameManager.VersionLoaded
+	whitespace_remover.compile("\\s+")
+	
+	var curr_version = whitespace_remover.sub(GameManager.version,"",true)
+	var latest_version = whitespace_remover.sub(GameManager.version_latest,"",true)
+	
+	if latest_version == "":
+		version.text = "Failed to fetch latest version!"
+		version.add_theme_color_override("font_color",Color(1,0,0))
+		return
+	
+	if curr_version != latest_version:
+		version.add_theme_color_override("font_color",Color(1,0,0))
+		version.text = "v%s is outdated! latest version: v%s" % [curr_version, latest_version]
+	else:
+		version.text = "v" + GameManager.version + " (latest) "
 	
 # 
 func _send_color_to_player(part: String, color: Color):
@@ -33,17 +53,6 @@ func _send_color_to_player(part: String, color: Color):
 
 	if DiscordRPCManager != null:
 		DiscordRPCManager.menu()
-
-func _init() -> void:
-	if GameManager.version_latest == "": await GameManager.VersionLoaded
-	whitespace_remover.compile("\\s+")
-	var curr_version = whitespace_remover.sub(GameManager.version,"",true)
-	var latest_version = whitespace_remover.sub(GameManager.version_latest,"",true)
-	if curr_version != latest_version:
-		version.add_theme_color_override("font_color",Color(1,0,0))
-		version.text = "%s is outdated! latest version: %s" % [curr_version, latest_version]
-	else:
-		version.text = GameManager.version
 
 func _file_dragged(files:PackedStringArray):
 	for x in files:
@@ -60,11 +69,9 @@ func _file_dragged(files:PackedStringArray):
 			DirAccess.copy_absolute(x,dest)
 			load_all_levels()
 		else:
-			print("file not json durr")
+			push_warning("file not json durr")
 	pass
 
-
-	
 func _on_play_pressed() -> void:
 	get_tree().change_scene_to_file("res://custom.tscn")
 	

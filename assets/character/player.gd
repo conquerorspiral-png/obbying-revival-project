@@ -82,7 +82,6 @@ func _apply_transparency_recursive(node: Node, alpha: float):
 		var material = node.material_override
 		if not material or not (material is StandardMaterial3D):
 			if node.get_active_material(0) is StandardMaterial3D:
-				print("material active")
 				material = node.get_active_material(0).duplicate()
 			else:
 				material = StandardMaterial3D.new()
@@ -404,7 +403,7 @@ func _physics_process(delta: float) -> void:
 	update_anim()
 	just_jumped_off = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Health <= 0:
 		reset()
 
