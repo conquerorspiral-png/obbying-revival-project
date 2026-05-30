@@ -9,12 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://ctlrovtarcx8" path="res://assets/images/UI/refresh.png" id="6_2nypq"]
 [ext_resource type="PackedScene" uid="uid://bll3e5wwm6qpo" path="res://assets/prefabs/UI/FOV.tscn" id="6_826wr"]
 [ext_resource type="PackedScene" uid="uid://b5gciitoxxw3j" path="res://assets/prefabs/UI/maxFPS.tscn" id="7_ucygd"]
-[ext_resource type="PackedScene" uid="uid://buyvpgvyi0uoh" path="res://assets/prefabs/UI/alljumpToggle.tscn" id="8_mipys"]
-[ext_resource type="PackedScene" uid="uid://cts168v6eovhs" path="res://scenes/goog.tscn" id="10_2nypq"]
-[ext_resource type="PackedScene" uid="uid://duj8uanvn1sqi" path="res://assets/prefabs/models/character.tscn" id="12_bky6r"]
 [ext_resource type="Texture2D" uid="uid://cm7xmpucganbp" path="res://assets/images/UI/Discord.png" id="8_8vx4p"]
 [ext_resource type="PackedScene" uid="uid://buyvpgvyi0uoh" path="res://assets/prefabs/UI/practiceToggle.tscn" id="8_mipys"]
 [ext_resource type="Script" uid="uid://4mp0toaekq5u" path="res://scenes/texture_button.gd" id="9_tdapf"]
+[ext_resource type="PackedScene" uid="uid://cts168v6eovhs" path="res://scenes/goog.tscn" id="10_2nypq"]
 [ext_resource type="Texture2D" uid="uid://qfb15y132847" path="res://assets/images/UI/Youtube.png" id="10_7shrw"]
 [ext_resource type="Script" uid="uid://ywm0qwb34xhy" path="res://scripts/gui/renderer_switcher.gd" id="11_ptake"]
 [ext_resource type="Texture2D" uid="uid://bc1ndnhomeu3p" path="res://assets/images/UI/github.png" id="11_viowm"]
@@ -48,6 +46,7 @@ Button/fonts/font = null
 
 [sub_resource type="LabelSettings" id="LabelSettings_2nypq"]
 font_size = 32
+
 [sub_resource type="Theme" id="Theme_ptake"]
 
 [sub_resource type="GDScript" id="GDScript_hubol"]
@@ -139,7 +138,7 @@ func _process(delta: float) -> void:
 	mat.set_shader_parameter(\"elapsed_time\",elapsed_time)
 "
 
-[node name="MainMenu" type="Node2D" unique_id=361961899 node_paths=PackedStringArray("menu_avatar", "body_parts")]
+[node name="MainMenu" type="Node2D" unique_id=361961899 node_paths=PackedStringArray("menu_avatar")]
 position = Vector2(-27, 103)
 script = ExtResource("1_ow34m")
 menu_avatar = NodePath("AvatarCustom/SubViewportContainer/SubViewport/CharacterAvatar")
@@ -435,13 +434,6 @@ theme_override_font_sizes/font_size = 30
 text = "Customize avatar"
 alignment = 0
 
-[node name="FileDialog" type="FileDialog" parent="." unique_id=816336805]
-oversampling_override = 1.0
-title = "Open a Directory"
-file_mode = 2
-access = 2
-
-[node name="AlljumpToggle" parent="." unique_id=118282012 instance=ExtResource("8_mipys")]
 [node name="RendererSwitcher" type="OptionButton" parent="Settings" unique_id=1316471072]
 offset_left = 135.0
 offset_top = -111.0
@@ -475,11 +467,30 @@ initial_position = 2
 size = Vector2i(300, 150)
 dialog_text = "Restart to apply changes"
 
-[node name="PracticeToggle" parent="." unique_id=118282012 instance=ExtResource("8_mipys")]
-offset_left = 1057.0
-offset_top = 52.0
-offset_right = 1165.0
-offset_bottom = 91.0
+[node name="FileDialog" type="FileDialog" parent="." unique_id=816336805]
+oversampling_override = 1.0
+title = "Open a Directory"
+file_mode = 2
+access = 2
+
+[node name="AlljumpToggle" parent="." unique_id=118282012 instance=ExtResource("8_mipys")]
+offset_left = -118.0
+offset_top = 42.0
+offset_right = -8.0
+offset_bottom = 73.0
+
+[node name="PracticeToggle" parent="." unique_id=751050141 instance=ExtResource("8_mipys")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = 1.0
+offset_right = -8.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "Practice"
 
 [node name="AvatarCustom" type="Node2D" parent="." unique_id=1786122237]
@@ -597,17 +608,24 @@ light_energy = 0.5
 sky_mode = 1
 
 [node name="RPCToggle" parent="." unique_id=214793037 instance=ExtResource("14_5faoh")]
-visible = false
 offset_left = 704.0
 offset_top = 61.0
 offset_right = 845.0
 offset_bottom = 92.0
 
 [node name="RToggle" parent="." unique_id=163921816 instance=ExtResource("14_ptake")]
-offset_left = 704.0
-offset_top = 103.0
-offset_right = 904.0
-offset_bottom = 134.0
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.0
+offset_top = -25.0
+offset_right = 83.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="pressed" from="Main/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Main/Help" to="." method="_on_help_pressed"]
@@ -615,9 +633,6 @@ offset_bottom = 134.0
 [connection signal="pressed" from="Main/Panel/Open Location" to="Main/Panel/Open Location" method="_on_pressed"]
 [connection signal="pressed" from="Main/Panel/Reload" to="Main/Panel/Reload" method="_on_pressed"]
 [connection signal="pressed" from="Main/Load" to="." method="_on_load_folder_pressed"]
-[connection signal="pressed" from="Settings/Back" to="." method="_on_return_to_main_pressed"]
-[connection signal="pressed" from="Settings/Avatar" to="." method="_on_avatar_pressed"]
-[connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
 [connection signal="meta_clicked" from="Main/Version" to="Main/Version" method="_on_meta_clicked"]
 [connection signal="pressed" from="Help/Discord" to="Help/Discord" method="_on_pressed"]
 [connection signal="pressed" from="Help/Youtube" to="Help/Youtube" method="_on_pressed"]
@@ -627,4 +642,5 @@ offset_bottom = 134.0
 [connection signal="pressed" from="Settings/Back" to="." method="_on_return_to_main_pressed"]
 [connection signal="pressed" from="Settings/Avatar" to="." method="_on_avatar_pressed"]
 [connection signal="item_selected" from="Settings/RendererSwitcher" to="Settings/RendererSwitcher" method="_on_item_selected"]
+[connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
 [connection signal="pressed" from="AvatarCustom/Back" to="." method="_on_return_to_settings_pressed"]

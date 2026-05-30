@@ -50,7 +50,7 @@ func _ready():
 
 # whoever reads this please add camera shader caching it lags so hard on first zoom
 
-func _input(event):
+func _unhandled_input(event: InputEvent) -> void:
 	if freecam_active:
 		if event is InputEventMouseMotion:
 			var aspect = get_viewport().size.x / get_viewport().size.y
@@ -81,8 +81,8 @@ func _input(event):
 	target.visible = (mode != CameraMode.FIRSTPERSON)
 	target.rotation_locked = GameManager.shiftlocked or mode == CameraMode.FIRSTPERSON
 
-	if event is InputEventMouseMotion:
-		if rotating or GameManager.shiftlocked:
+	if event is InputEventMouseMotion or event is InputEventScreenDrag:
+		if rotating or GameManager.shiftlocked or event is InputEventScreenDrag:
 			var aspect = get_viewport().size.x / get_viewport().size.y
 			yaw -= event.screen_relative.x * aspect * GameManager.data.sensitivity / 200.0
 			pitch -= event.screen_relative.y  * GameManager.data.sensitivity / 200.0

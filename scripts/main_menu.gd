@@ -172,3 +172,6 @@ func _on_load_folder_pressed() -> void:
 
 func _on_file_dialog_dir_selected(dir: String) -> void:
 	load_all_levels(dir)
+
+func _on_help_pressed() -> void:
+	cam.global_position = Help.global_position
