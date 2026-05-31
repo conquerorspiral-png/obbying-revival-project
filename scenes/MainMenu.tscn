@@ -331,7 +331,7 @@ offset_top = -361.0
 offset_right = 562.0
 offset_bottom = 260.0
 theme_override_font_sizes/font_size = 32
-text = "In-Game FAQ
+text = "In-Game FAQ (PC Version)
 
 Q: How do I add custom levels?
 A: Just drag the .json file into the menu!
@@ -608,6 +608,7 @@ light_energy = 0.5
 sky_mode = 1
 
 [node name="RPCToggle" parent="." unique_id=214793037 instance=ExtResource("14_5faoh")]
+visible = false
 offset_left = 704.0
 offset_top = 61.0
 offset_right = 845.0

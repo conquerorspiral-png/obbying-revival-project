@@ -233,7 +233,6 @@ func _update_input_actions(output: Vector2) -> void:
 		{"action": up_movement, "condition": output.y < 0, "strength": -output.y},
 		{"action": down_movement, "condition": output.y > 0, "strength": output.y}
 	]
-	
 	# Trigger or release actions based on movement
 	for action in actions:
 		if action.condition:

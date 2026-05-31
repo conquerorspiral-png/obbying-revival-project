@@ -14,7 +14,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	e += delta
 	smod *= 0.95
-	goog.skew = deg_to_rad(cos(e*1.15*(1.5*smod+1)) * 5 * (10*smod+1))
+	goog.skew = deg_to_rad(cos(e*1.0*(1.5*smod+1)) * 5 * (10*smod+1))
 	goog.scale = Vector2((sin(e)*0.025+0.225)+smod,(cos(e)*0.025+0.225)-smod*0.5)
 
 

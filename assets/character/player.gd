@@ -574,6 +574,9 @@ func _step_climbing() -> void:
 func _process(_delta: float) -> void:
 	if Health <= 0:
 		reset()
+	if State == states.Walking:
+		var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		playerAnims.speed_scale = input_dir.length()
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body.is_in_group("kills"):

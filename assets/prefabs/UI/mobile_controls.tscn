@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://xpitdqek7ure" path="res://assets/images/UI/Jump2.png" id="5_esy1q"]
 [ext_resource type="Texture2D" uid="uid://ccwaod1m5s2x0" path="res://assets/images/UI/exit.png" id="8_7w2gi"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_fq1r1"]
-radius = 8.2
+[sub_resource type="CircleShape2D" id="CircleShape2D_7w2gi"]
+radius = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ghxuc"]
 radius = 100.0
@@ -19,7 +19,7 @@ radius = 100.0
 size = Vector2(640, 360)
 
 [sub_resource type="Curve" id="Curve_5kjwr"]
-_data = [Vector2(0, 0), 0.0, 2.0, 0, 1, Vector2(0.5, 1), 2.0, 0.0, 1, 0]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
 point_count = 2
 
 [node name="MobileControls" type="Control" unique_id=2029212896]
@@ -35,7 +35,7 @@ mouse_filter = 2
 position = Vector2(338, 524)
 base_texture = ExtResource("2_ghxuc")
 tip_texture = ExtResource("3_7w2gi")
-deadzone_circle = SubResource("CircleShape2D_fq1r1")
+deadzone_circle = SubResource("CircleShape2D_7w2gi")
 tip_limit_circle = SubResource("CircleShape2D_ghxuc")
 touch_detection_region = SubResource("RectangleShape2D_7w2gi")
 strength_curve = SubResource("Curve_5kjwr")

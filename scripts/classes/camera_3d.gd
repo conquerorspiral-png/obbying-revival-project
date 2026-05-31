@@ -91,7 +91,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		fingers2[event.index] = event.position
 		if len(fingers) == 2 and len(fingers2) == 2:
 			target_distance -= ((fingers2[0] - fingers2[1]).length()-(fingers[0] - fingers[1]).length()) * 0.075
-			print(fingers)
+
 			fingers = fingers2.duplicate()
 	elif event is InputEventScreenTouch and event.index < 2:
 		if event.pressed:
